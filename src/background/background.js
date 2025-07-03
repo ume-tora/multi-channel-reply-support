@@ -11,8 +11,10 @@ class MultiChannelReplyAssistant {
     // Handle messages from content scripts
     chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
     
-    // Handle context menu actions
-    this.setupContextMenu();
+    // Handle context menu actions (with delay to ensure API is ready)
+    setTimeout(() => {
+      this.setupContextMenu();
+    }, 100);
   }
 
   handleInstall(details) {
@@ -35,13 +37,32 @@ class MultiChannelReplyAssistant {
   }
 
   setupContextMenu() {
-    chrome.contextMenus.create({
-      id: 'generate-reply',
-      title: 'Generate AI Reply',
-      contexts: ['selection']
-    });
+    // Check if contextMenus API is available
+    if (chrome.contextMenus) {
+      try {
+        chrome.contextMenus.removeAll(() => {
+          if (chrome.runtime.lastError) {
+            console.log('Error removing context menus:', chrome.runtime.lastError);
+          }
+          
+          chrome.contextMenus.create({
+            id: 'generate-reply',
+            title: 'Generate AI Reply',
+            contexts: ['selection']
+          }, () => {
+            if (chrome.runtime.lastError) {
+              console.log('Error creating context menu:', chrome.runtime.lastError);
+            }
+          });
+        });
 
-    chrome.contextMenus.onClicked.addListener(this.handleContextMenu.bind(this));
+        chrome.contextMenus.onClicked.addListener(this.handleContextMenu.bind(this));
+      } catch (error) {
+        console.error('Context menu setup error:', error);
+      }
+    } else {
+      console.log('Context menus API not available');
+    }
   }
 
   handleContextMenu(info, tab) {
