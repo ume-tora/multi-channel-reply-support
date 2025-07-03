@@ -7,7 +7,8 @@
     "activeTab",
     "storage",
     "identity",
-    "scripting"
+    "scripting",
+    "contextMenus"
   ],
   "host_permissions": [
     "https://mail.google.com/*",
@@ -39,14 +40,5 @@
   "action": {
     "default_popup": "popup.html",
     "default_title": "Multi-Channel Reply Assistant"
-  },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["ui/reply-modal.html", "ui/reply-modal.js", "ui/reply-modal.css"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }
