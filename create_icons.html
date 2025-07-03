@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Icons</title>
+</head>
+<body>
+    <canvas id="canvas16" width="16" height="16"></canvas>
+    <canvas id="canvas48" width="48" height="48"></canvas>
+    <canvas id="canvas128" width="128" height="128"></canvas>
+    
+    <script>
+        function createIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#1a73e8';
+            ctx.fillRect(0, 0, size, size);
+            
+            // White circle
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/3, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Eyes
+            ctx.fillStyle = '#1a73e8';
+            ctx.beginPath();
+            ctx.arc(size/2 - size/8, size/2 - size/8, size/16, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(size/2 + size/8, size/2 - size/8, size/16, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Mouth
+            ctx.strokeStyle = '#1a73e8';
+            ctx.lineWidth = size/16;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/8, 0, Math.PI);
+            ctx.stroke();
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        // Create icons
+        const icon16 = createIcon('canvas16', 16);
+        const icon48 = createIcon('canvas48', 48);
+        const icon128 = createIcon('canvas128', 128);
+        
+        console.log('Icons created');
+    </script>
+</body>
+</html>
