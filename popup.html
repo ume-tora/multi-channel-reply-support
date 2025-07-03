@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Channel Reply Assistant</title>
+  <style>
+    body {
+      width: 350px;
+      min-height: 450px;
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .header h1 {
+      font-size: 18px;
+      color: #1a73e8;
+      margin: 0;
+    }
+    
+    .header .subtitle {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    
+    .section {
+      margin-bottom: 20px;
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .section h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #1a73e8;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .checkbox-item input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    
+    .checkbox-item label {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    
+    .primary-btn {
+      background: #1a73e8;
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      background: #1557b0;
+    }
+    
+    .secondary-btn {
+      background: #f8f9fa;
+      color: #3c4043;
+    }
+    
+    .secondary-btn:hover {
+      background: #e8eaed;
+    }
+    
+    .status {
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: #e8f5e8;
+      color: #2e7d32;
+    }
+    
+    .status.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .platform-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .platform-status:last-child {
+      border-bottom: none;
+    }
+    
+    .platform-name {
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .platform-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+    }
+    
+    .platform-indicator.active {
+      background: #34a853;
+    }
+    
+    .platform-indicator.supported {
+      background: #fbbc04;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Multi-Channel Reply Assistant</h1>
+    <div class="subtitle">AI-powered reply generation for messaging platforms</div>
+  </div>
+  
+  <div class="section">
+    <h3>AI Configuration</h3>
+    <div class="form-group">
+      <label for="provider">AI Provider</label>
+      <select id="provider">
+        <option value="openai">OpenAI</option>
+        <option value="anthropic">Anthropic</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="apiKey">API Key</label>
+      <input type="password" id="apiKey" placeholder="Enter your API key">
+    </div>
+    <div class="form-group">
+      <label for="model">Model</label>
+      <select id="model">
+        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+        <option value="gpt-4">GPT-4</option>
+        <option value="claude-3-sonnet-20240229">Claude 3 Sonnet</option>
+        <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Platform Support</h3>
+    <div class="checkbox-group">
+      <div class="checkbox-item">
+        <input type="checkbox" id="gmail" checked>
+        <label for="gmail">Gmail</label>
+        <div class="platform-indicator active"></div>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="chatwork">
+        <label for="chatwork">Chatwork</label>
+        <div class="platform-indicator supported"></div>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="googleChat">
+        <label for="googleChat">Google Chat</label>
+        <div class="platform-indicator supported"></div>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="line" disabled>
+        <label for="line">LINE (Limited)</label>
+        <div class="platform-indicator"></div>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="messenger" disabled>
+        <label for="messenger">Messenger (Limited)</label>
+        <div class="platform-indicator"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Settings</h3>
+    <div class="checkbox-item">
+      <input type="checkbox" id="autoReply">
+      <label for="autoReply">Enable automatic reply suggestions</label>
+    </div>
+  </div>
+  
+  <div class="button-group">
+    <button class="primary-btn" id="saveBtn">Save Settings</button>
+    <button class="secondary-btn" id="testBtn">Test Connection</button>
+  </div>
+  
+  <div id="status" class="status hidden"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

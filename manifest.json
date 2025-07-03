@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "Multi-Channel Reply Assistant",
+  "version": "1.0.0",
+  "description": "AI-powered reply assistant for multiple messaging platforms",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://gmail.com/*",
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "https://api.line.me/*",
+    "https://www.chatwork.com/*",
+    "https://chat.google.com/*",
+    "https://workspace.google.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://gmail.com/*"],
+      "js": ["src/content/gmail.js"]
+    },
+    {
+      "matches": ["https://www.chatwork.com/*"],
+      "js": ["src/content/chatwork.js"]
+    },
+    {
+      "matches": ["https://chat.google.com/*"],
+      "js": ["src/content/google-chat.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Multi-Channel Reply Assistant"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["ui/reply-modal.html", "ui/reply-modal.js", "ui/reply-modal.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
